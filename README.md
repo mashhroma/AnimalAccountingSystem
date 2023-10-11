@@ -146,13 +146,63 @@
     ALTER TABLE all_animals ADD COLUMN id SERIAL PRIMARY KEY; 
     ```
 
-13. Создать класс с Инкапсуляцией методов и наследованием по диаграмме.
+13. Создать класс с Инкапсуляцией методов и наследованием по диаграмме.  
+    [Код родительского класса](./animals/Animal.java "java-code")
+
+    ```java
+    // часть кода родительского класса
+    abstract public class Animal {
+
+        private int counter;
+        protected int id;
+        protected String name;
+        protected Date birthday;
+        protected ArrayList<String> commands;
+
+        {
+            counter++;
+        }
+
+        public Animal(String name, Date birthday) {
+            this.name = name;
+            this.birthday = birthday;
+            this.id = counter;
+        }
+
+        public void setCommand(ArrayList<String> commands) {
+            this.commands = commands;
+        }
+
+        public void addCommand(ArrayList<String> commands) {
+            this.commands.addAll(commands);
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public ArrayList<String> getCommands() {
+            return commands;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    ```
 
 14. Написать программу, имитирующую работу реестра домашних животных. В программе должен быть реализован следующий функционал:
-    1. Завести новое животное
-    2. определять животное в правильный класс
-    3. увидеть список команд, которое выполняет животное
-    4. обучить животное новым командам
-    5. Реализовать навигацию по меню
+    1. завести новое животное;
+    2. определять животное в правильный класс;
+    3. увидеть список команд, которое выполняет животное;
+    4. обучить животное новым командам;
+    5. реализовать навигацию по меню.  
+
+    [Код класса учета животных](AccountingSystem.java "java-code")  
+    [Код класса с навигацией](Program.java "java-code")
 
 15. Создайте класс Счетчик, у которого есть метод add(), увеличивающий̆ значение внутренней̆int переменной̆на 1 при нажатие “Завести новое животное” Сделайте так, чтобы с объектом такого типа можно было работать в блоке try-with-resources. Нужно бросить исключение, если работа с объектом типа счетчик была не в ресурсном try и/или ресурс остался открыт. Значение считать в ресурсе try, если при заведения животного заполнены все поля.
