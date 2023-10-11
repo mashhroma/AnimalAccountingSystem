@@ -65,12 +65,7 @@
     ```
 
 8. Создать таблицы с иерархией из диаграммы в БД.
-
-    ```sql
-    USE DATABASE human_friends;
-    CREATE TABLE pets;
-    CREATE TABLE pack_animals;
-    ```
+    [SQL-скрипт создания таблиц](./sql_scripts/create_tables.sql "SQL-script")
 
 9. Заполнить низкоуровневые таблицы именами(животных), командами которые они выполняют и датами рождения.
 
