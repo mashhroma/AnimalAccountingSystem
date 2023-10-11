@@ -122,7 +122,29 @@
                     ' month'); 
     ```
 
-12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.
+12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.  [SQL-скрипт](./sql_scripts/union_tables.sql "SQL-script")
+
+    ```sql
+    CREATE TABLE all_animals
+        SELECT
+            type, name, birthday, commands, 'prev_table - dogs' AS prev_table
+        FROM 
+            dogs
+        UNION SELECT
+            type, name, birthday, commands, 'prev_table - cats' AS prev_table
+        FROM
+            cats
+        UNION SELECT
+            type, name, birthday, commands, 'prev_table - hamsters' AS prev_table
+        FROM
+            hamsters
+        UNION SELECT
+            type, name, birthday, commands, 'prev_table - horses_donkeys' AS prev_table
+        FROM 
+            horses_donkeys;
+    
+    ALTER TABLE all_animals ADD COLUMN id SERIAL PRIMARY KEY; 
+    ```
 
 13. Создать класс с Инкапсуляцией методов и наследованием по диаграмме.
 
