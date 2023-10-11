@@ -70,7 +70,24 @@
 9. Заполнить низкоуровневые таблицы именами(животных), командами которые они выполняют и датами рождения.  
     [SQL-скрипт заполнения таблиц](./sql_scripts/insert_tables.sql "SQL-script")
 
-10. Удалить из таблицы верблюдов, т.к. верблюдов решили перевезти в другой питомник на зимовку. Объединить таблицы лошади, и ослы в одну таблицу.
+10. Удалить из таблицы верблюдов, т.к. верблюдов решили перевезти в другой питомник на зимовку. Объединить таблицы лошади, и ослы в одну таблицу.  [SQL-скрипт](./sql_scripts/change_tables.sql "SQL-script")
+
+    ```sql
+    DROP TABLE camels;
+
+    CREATE TABLE horses_donkeys
+        SELECT type, name, birthday, commands
+        FROM horses
+        UNION
+        SELECT type, name, birthday, commands
+        FROM donkeys;
+
+    ALTER TABLE horses_donkeys
+    ADD COLUMN
+        id SERIAL PRIMARY KEY;
+        
+    DROP TABLE horses, donkeys; 
+    ```
 
 11. Создать новую таблицу “молодые животные” в которую попадут все животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью до месяца подсчитать возраст животных в новой таблице.
 
