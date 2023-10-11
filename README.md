@@ -89,7 +89,38 @@
     DROP TABLE horses, donkeys; 
     ```
 
-11. Создать новую таблицу “молодые животные” в которую попадут все животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью до месяца подсчитать возраст животных в новой таблице.
+11. Создать новую таблицу “молодые животные” в которую попадут все животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью до месяца подсчитать возраст животных в новой таблице.   [SQL-скрипт](./sql_scripts/table_young_animals.sql "SQL-script")
+
+    ```sql
+    CREATE TABLE young_animals SELECT * FROM
+        (SELECT
+            type, name, birthday, commands
+        FROM
+            hamsters UNION SELECT 
+            type, name, birthday, commands
+        FROM
+            dogs UNION SELECT 
+            type, name, birthday, commands
+        FROM
+            cats UNION SELECT 
+            type, name, birthday, commands
+        FROM
+            horses_donkeys) AS choice
+        WHERE
+            choice.birthday BETWEEN NOW() - INTERVAL 3 YEAR AND NOW() - INTERVAL 1 YEAR;
+
+    ALTER TABLE young_animals
+        ADD age TEXT;
+
+    UPDATE young_animals 
+        SET 
+            age = CONCAT(TIMESTAMPDIFF(YEAR, birthday, CURDATE()),
+                    ' years ',
+                    TIMESTAMPDIFF(MONTH,
+                        birthday,
+                        CURDATE()) % 12,
+                    ' month'); 
+    ```
 
 12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.
 
