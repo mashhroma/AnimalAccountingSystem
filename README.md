@@ -223,6 +223,7 @@
     ```
 
     ```java
+    // отрывок кода с использованием счетчика counter  при заведении животного
     try {
         System.out.print("Введите вид животного: ");
         String type = scanner.nextLine().toLowerCase();
