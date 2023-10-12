@@ -5,7 +5,7 @@ public class Program {
     public static void main(String[] args) throws ParseException {
 
         AccountingSystem accountingSystem = new AccountingSystem();
-
+        Counter counter = new Counter();
         Scanner scanner = new Scanner(System.in);
 
         String option = "";
@@ -18,16 +18,26 @@ public class Program {
 
             switch (option) {
                 case "1":
-                    System.out.print("Введите вид животного: ");
-                    String type = scanner.nextLine().toLowerCase();
-                    System.out.print("Введите имя животного: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Введите дату рождения животного в формате дд.мм.гггг: ");
-                    String strDate = scanner.nextLine();
-                    System.out.print("Введите команды, которые умеет делать животное, через запятую: ");
-                    String commands = scanner.nextLine().toLowerCase().replaceAll("\\s", "");
-                    accountingSystem.getAnimal(type, name, strDate, commands);
-                    System.out.println("Животное успешно занесено в базу.");
+                    try {
+                        System.out.print("Введите вид животного: ");
+                        String type = scanner.nextLine().toLowerCase();
+                        System.out.print("Введите имя животного: ");
+                        String name = scanner.nextLine();
+                        System.out.print("Введите дату рождения животного в формате дд.мм.гггг: ");
+                        String strDate = scanner.nextLine();
+                        System.out.print("Введите команды, которые умеет делать животное, через запятую: ");
+                        String commands = scanner.nextLine().toLowerCase().replaceAll("\\s", "");
+                        if (type.isEmpty() || name.isEmpty() || strDate.isEmpty() || commands.isEmpty()) {
+                            throw new Exception("Заполнены не все поля! Животное не добавлено в базу.");
+                        }
+                        accountingSystem.getAnimal(type, name, strDate, commands);
+                        counter.add();
+                        counter.printCounter();
+                        System.out.println("Животное успешно занесено в базу.");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     break;
                 case "2":
                     System.out.println("Список всех животных в питомнике:");

@@ -206,3 +206,43 @@
     [Код класса с навигацией](Program.java "java-code")
 
 15. Создайте класс Счетчик, у которого есть метод add(), увеличивающий̆ значение внутренней̆int переменной̆на 1 при нажатие “Завести новое животное” Сделайте так, чтобы с объектом такого типа можно было работать в блоке try-with-resources. Нужно бросить исключение, если работа с объектом типа счетчик была не в ресурсном try и/или ресурс остался открыт. Значение считать в ресурсе try, если при заведения животного заполнены все поля.
+
+    ```java
+    public class Counter {
+
+        static int counter;
+
+        public void add() {
+            counter++;
+        }
+
+        public void printCounter() {
+            System.out.println("Всего успешно заведено животных: " + counter);
+        }
+    }
+    ```
+
+    ```java
+    try {
+        System.out.print("Введите вид животного: ");
+        String type = scanner.nextLine().toLowerCase();
+        System.out.print("Введите имя животного: ");
+        String name = scanner.nextLine();
+        System.out.print("Введите дату рождения животного в формате дд.мм.гггг: ");
+        String strDate = scanner.nextLine();
+        System.out.print("Введите команды, которые умеет делать животное, через запятую: ");
+        String commands = scanner.nextLine().toLowerCase().replaceAll("\\s", "");
+        
+        if (type.isEmpty() || name.isEmpty() || strDate.isEmpty() || commands.isEmpty()) {
+            throw new Exception("Заполнены не все поля! Животное не добавлено в базу.");
+        }
+        
+        accountingSystem.getAnimal(type, name, strDate, commands);
+        counter.add();
+        counter.printCounter();
+        System.out.println("Животное успешно занесено в базу.");
+
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
+    ```

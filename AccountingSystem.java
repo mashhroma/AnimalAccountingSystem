@@ -88,7 +88,7 @@ public class AccountingSystem {
 
     public void saveToJSON() {
         File fileName = new File("base.json");
-        try (FileWriter writer = new FileWriter(fileName, true)) {
+        try (FileWriter writer = new FileWriter(fileName)) {
             for (int i = 0; i < allAnimals.size(); i++) {
                 if (i == allAnimals.size() - 1) {
                     writer.write(allAnimals.get(i).toJSON() + "\n");
