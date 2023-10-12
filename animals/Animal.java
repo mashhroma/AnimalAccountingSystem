@@ -7,11 +7,13 @@ import java.util.Date;
 
 abstract public class Animal {
 
-    private int counter;
+    private static int counter;
     protected int id;
     protected String name;
     protected Date birthday;
     protected ArrayList<String> commands;
+
+    DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
     {
         counter++;
@@ -43,17 +45,30 @@ abstract public class Animal {
         return commands;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     @Override
     public String toString() {
-        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+
         String type = this.getClass().toString().split("\\.")[1].toString();
         return "Animal: " + type + " id: " + id + ", name: " + name + ", birthday: "
                 + formatter.format(birthday) + ", commands: "
                 + commands + ".";
     }
 
+    public String toJSON() {
+        return "{\n" +
+                "\"type\":\"" + this.getClass().toString().split("\\.")[1].toString() + "\",\n" +
+                "\"id\":\"" + id + "\",\n" +
+                "\"name\":\"" + name + "\",\n" +
+                "\"birthday\":\"" + formatter.format(birthday) + "\",\n" +
+                "\"commands\":\"" + commands + "\"\n" +
+                "}";
+    }
 }

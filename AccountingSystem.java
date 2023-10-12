@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +11,12 @@ import java.util.Arrays;
 import java.util.Date;
 
 import animals.Animal;
+import animals.Camel;
+import animals.Cat;
 import animals.Dog;
+import animals.Donkey;
+import animals.Horse;
+import animals.Humster;
 
 public class AccountingSystem {
 
@@ -23,8 +33,28 @@ public class AccountingSystem {
         Date birthday = formatter.parse(strDate);
         switch (type) {
             case "dog":
-                Animal animal = new Dog(name, birthday);
-                addAnimal(animal, commands);
+                Animal dog = new Dog(name, birthday);
+                addAnimal(dog, commands);
+                break;
+            case "cat":
+                Animal cat = new Cat(name, birthday);
+                addAnimal(cat, commands);
+                break;
+            case "humster":
+                Animal humster = new Humster(name, birthday);
+                addAnimal(humster, commands);
+                break;
+            case "horse":
+                Animal horse = new Horse(name, birthday);
+                addAnimal(horse, commands);
+                break;
+            case "camel":
+                Animal camel = new Camel(name, birthday);
+                addAnimal(camel, commands);
+                break;
+            case "donkey":
+                Animal donkey = new Donkey(name, birthday);
+                addAnimal(donkey, commands);
                 break;
             default:
                 break;
@@ -47,16 +77,6 @@ public class AccountingSystem {
         }
     }
 
-    public void showCommands(String name) {
-        for (Animal animal : allAnimals) {
-            if (animal.getName().equals(name)) {
-                for (String command : animal.getCommands()) {
-                    System.out.println(command);
-                }
-            }
-        }
-    }
-
     public void learnCommand(int id, String commands) {
         ArrayList<String> commandList = new ArrayList<>(Arrays.asList(commands.split(",")));
         for (Animal animal : allAnimals) {
@@ -66,13 +86,19 @@ public class AccountingSystem {
         }
     }
 
-    public void learnCommand(String name, String commands) {
-        ArrayList<String> commandList = new ArrayList<>(Arrays.asList(commands.split(",")));
-        for (Animal animal : allAnimals) {
-            if (animal.getName().equals(name)) {
-                animal.addCommand(commandList);
+    public void saveToJSON() {
+        File fileName = new File("base.json");
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+            for (int i = 0; i < allAnimals.size(); i++) {
+                if (i == allAnimals.size() - 1) {
+                    writer.write(allAnimals.get(i).toJSON() + "\n");
+                } else {
+                    writer.write(allAnimals.get(i).toJSON() + ",\n");
+                }
             }
+            writer.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
-
 }
